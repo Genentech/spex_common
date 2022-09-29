@@ -204,7 +204,13 @@ class ArangoDB:
         keys = kwargs.keys()
         if len(keys) < 1:
             return ''
-
-        args = [f'doc.{key} == @{key}' for key in keys]
+        args = []
+        for key in keys:
+            if isinstance(kwargs.get(key), list):
+                args += [f'doc.{key} in @{key}']
+            else:
+                args += [f'doc.{key} == @{key}']
+            
+        # args = [f'doc.{key} == @{key}' for key in keys]
 
         return f'FILTER {" && ".join(args)}'
