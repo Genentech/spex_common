@@ -75,7 +75,7 @@ def create_tasks(body, job) -> list[dict]:
             data = dict(body)
             data['omeroId'] = omeroId
             data['parent'] = parent
-            data['status'] = body.get('status', TaskStatus.ready.value)
+            data['status'] = body.get('status', TaskStatus.pending_approval.value)
             del data['omeroIds']
 
             new_task = insert(data)
@@ -84,7 +84,7 @@ def create_tasks(body, job) -> list[dict]:
     else:
         data = dict(body)
         data['parent'] = parent
-        data['status'] = body.get('status', TaskStatus.ready.value)
+        data['status'] = body.get('status', TaskStatus.pending_approval.value)
         new_task = insert(data)
         if new_task:
             result.append(new_task.to_json())
