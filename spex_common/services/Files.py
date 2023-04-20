@@ -2,10 +2,9 @@ import os
 
 
 def user_folder(author=None, folder=None):
-
-    destination = os.path.join(os.getenv('UPLOAD_FOLDER')) + '\\' + str(author.get('id')) + '\\'
+    destination = os.path.join(os.getenv('UPLOAD_FOLDER'), str(author.get('id')))
     if folder is not None:
-        destination = destination + folder + '\\'
+        destination = os.path.join(destination, folder)
     if not os.path.exists(destination):
         os.makedirs(destination)
     if not os.path.exists(destination):
@@ -15,9 +14,9 @@ def user_folder(author=None, folder=None):
 
 
 def check_path(author, path):
-    destination = os.path.join(os.getenv('UPLOAD_FOLDER')) + '\\' + str(author.get('id')) + '\\'
+    destination = os.path.join(os.getenv('UPLOAD_FOLDER'), str(author.get('id')))
     if path is not None:
-        destination = destination + path
+        destination = os.path.join(destination, path)
     if not os.path.exists(destination):
         return None, True
     else:
