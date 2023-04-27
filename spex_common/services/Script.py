@@ -3,11 +3,25 @@ import json
 import os
 
 
+def get_order(script_folder):
+    manifest_path = os.path.join(script_folder, 'manifest.json')
+    if not os.path.isfile(manifest_path):
+        return 999
+
+    with open(manifest_path, 'r') as manifest:
+        data = json.load(manifest)
+
+    return data.get('order', 999)
+
+
 def scripts_list():
     folder = os.path.join(os.getenv('DATA_STORAGE'), 'Scripts', '*', '')
-    return [
-        os.path.basename(os.path.dirname(script)) for script in glob(folder)
+    scripts = [
+        os.path.dirname(script) for script in glob(folder)
         if os.path.isfile(os.path.join(script, 'manifest.json'))
+    ]
+    return [
+        os.path.basename(script) for script in sorted(scripts, key=get_order)
     ]
 
 
