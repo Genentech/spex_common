@@ -8,6 +8,7 @@ class Job:
         self.name = kwargs.get('name', '')
         self.content = kwargs.get('content', '')
         self.omeroIds = kwargs.get('omeroIds', [])
+        self.file_names = kwargs.get('file_names', [])
         self.author = kwargs.get('author', '')
         self.status = kwargs.get('status', 0)
 
@@ -20,7 +21,8 @@ class Job:
             'omeroIds': self.omeroIds,
             '_id': self._id,
             'status': self.status,
-            'status_name': TaskStatus.from_status(self.status)
+            'status_name': TaskStatus.from_status(self.status),
+            'file_names': self.file_names
          }
 
 

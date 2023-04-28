@@ -10,6 +10,7 @@ class Task:
         self.parent = kwargs.get('parent', '')
         self.params = kwargs.get('params', {})
         self.status = kwargs.get('status', 0)
+        self.file_names = kwargs.get('file_names', [])
         self.id = kwargs.get('_key', '')
         self._id = kwargs.get('_id', '')
         self.csvdata = kwargs.get('csvdata', [])
@@ -28,6 +29,7 @@ class Task:
             'params': self.params,
             'status': self.status,
             'csvdata': self.csvdata,
+            'file_names': self.file_names,
             'id': self.id,
             '_id': self._id,
             'impath': self.impath,
