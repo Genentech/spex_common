@@ -76,23 +76,26 @@ def count(collection='jobs') -> int:
 
 
 def update_job(id, data, history: dict = {}) -> dict or None:
-    _job = update(id=id, data=data, history=history)
+    old_job = select(id=id)
+    new_job = update(id=id, data=data, history=history)
 
-    if _job is None:
+    if new_job is None:
         return None
 
-    _job = _job.to_json()
+    tasks = TaskService.select_tasks_edge(f'jobs/{new_job.id}')
 
-    tasks = TaskService.select_tasks_edge(_job['_id'])
+    if set(old_job.omeroIds) != set(new_job.omeroIds):
+        for item in tasks:
+            delete_connection(_to=item.get('_id'))
+            TaskService.delete(item.get('id'))
 
-    updated_tasks = []
+        tasks = TaskService.create_tasks(data, new_job)
 
-    for item in tasks:
-        item = TaskService.update(item['id'], data)
-        updated_tasks.append(item.to_json())
-    _job['tasks'] = updated_tasks
+    new_job.tasks = tasks
 
-    if _job.get('status') is None or _job.get('status') == '':
-        _job.update(status=0)
+    if new_job.status is None or new_job.status == '':
+        new_job.status=0
 
-    return _job
+    new_job = new_job.to_json()
+
+    return new_job
