@@ -42,15 +42,13 @@ def count():
 
 
 def trim(values: list[dict]):
+    new_arr = []
     if values:
         for val in values:
-            new_arr = []
-            for key in [key for key in list(val.keys()) if key not in ["name", "jobs"]]:
-                val.pop(key, None)
+            val = {key: val[key] for key in ["name", "jobs", "params"] if key in val}
+            new_arr.append(val)
             if jobs := val.get('jobs'):
                 val["jobs"] = trim(jobs)
-
-            new_arr.append(val)
     return new_arr
 
 

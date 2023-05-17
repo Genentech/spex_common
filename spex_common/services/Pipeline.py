@@ -81,6 +81,7 @@ def recursion_query(itemid, tree, _depth, pipeline_id):
             name: doc.name, 
             status: doc.status,
             file_names: doc.file_names,
+            params: doc.params,
             jobs: (
                 FOR item IN pipeline_direction 
                 FILTER item._from == @itemid 
