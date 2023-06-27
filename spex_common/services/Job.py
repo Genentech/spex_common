@@ -90,6 +90,9 @@ def update_job(id, data, history: dict = {}) -> dict or None:
             TaskService.delete(item.get('id'))
 
         tasks = TaskService.create_tasks(data, new_job)
+    else:
+        for item in tasks:
+            TaskService.update(item.get('id'), data)
 
     new_job.tasks = tasks
 
