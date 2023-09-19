@@ -135,7 +135,7 @@ class ArangoDB:
             hist_data.date = datetime.now().isoformat()
             hist_data.author = one_item["author"]
             hist_data.event_type = 'update_entry'
-            self.instance.insert_document('history', hist_data.to_json(), True, overwrite_mode=None)
+            # self.instance.insert_document('history', hist_data.to_json(), True, overwrite_mode=None)
 
         return item
 

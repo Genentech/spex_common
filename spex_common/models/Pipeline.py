@@ -11,6 +11,7 @@ class Pipeline:
         self.project = kwargs.get('project', '')
         self.id = kwargs.get('_key', '')
         self._id = kwargs.get('_id', '')
+        self.shared = kwargs.get('shared', False)
 
     def to_json(self):
         return {
@@ -22,7 +23,8 @@ class Pipeline:
             'id': self.id,
             '_id': self._id,
             'project': self.project,
-            'status_name': PipelineStatus.from_status(self.status)
+            'status_name': PipelineStatus.from_status(self.status),
+            'shared': self.shared,
         }
 
 
