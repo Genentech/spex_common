@@ -89,14 +89,6 @@ class ArangoDB:
 
     def insert(self, collection, data, overwrite_mode=None, history_content: dict = {}):
         item = self.instance.insert_document(collection, data, True, overwrite_mode=overwrite_mode)
-        if item and history_content:
-            hist_data = history({})
-            hist_data.content = history_content
-            hist_data.parent = item.get('_id')
-            hist_data.date = datetime.now().isoformat()
-            hist_data.author = item["new"]["author"]
-            hist_data.event_type = 'create_entry'
-            self.instance.insert_document('history', hist_data.to_json(), True, overwrite_mode=None)
         return item
 
 
@@ -127,15 +119,6 @@ class ArangoDB:
             }
         )
         item = receive_async_response(task)
-        if item and history_content:
-            one_item = item[0]
-            hist_data = history({})
-            hist_data.content = history_content
-            hist_data.parent = one_item.get('_id')
-            hist_data.date = datetime.now().isoformat()
-            hist_data.author = one_item["author"]
-            hist_data.event_type = 'update_entry'
-            # self.instance.insert_document('history', hist_data.to_json(), True, overwrite_mode=None)
 
         return item
 
