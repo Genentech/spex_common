@@ -74,3 +74,15 @@ def get_script_structure(script_name: str = None):
     result.update({'stages': stages})
 
     return result
+
+
+def get_return_block_by_script_path(script_name, script_path):
+    data = get_script_structure(script_name)
+    if not data:
+        return None
+
+    for stage in data.get('stages', []):
+        for script in stage.get('scripts', []):
+            if script.get('script_path') == script_path:
+                return script.get('return')
+    return None
