@@ -1,4 +1,4 @@
-from pickle import loads, dumps
+from dill import loads, dumps
 
 
 class Serializable:

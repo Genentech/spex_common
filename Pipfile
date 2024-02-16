@@ -11,7 +11,7 @@ redis = "==3.5.3"
 ujson = "==4.0.2"
 omero-py = "==5.9.1"
 aioredis = "==2.0.0"
-itsdangerous = "==2.0.1"
+dill = "==0.3.8"
 
 [dev-packages]
 
