@@ -81,6 +81,16 @@ def create_tasks(body, job) -> list[dict]:
             new_task = insert(data)
             if new_task:
                 result.append(new_task.to_json())
+    elif 'file_names' in body and len(body['file_names']) > 0:
+        for fileId in body['file_names']:
+            data = dict(body)
+            data['file_names'] = [fileId]
+            data['parent'] = parent
+            data['status'] = body.get('status', TaskStatus.pending_approval.value)
+            new_task = insert(data)
+            if new_task:
+                result.append(new_task.to_json())
+
     else:
         data = dict(body)
         data['parent'] = parent
